@@ -169,7 +169,9 @@ export class MarkdownPreviewPanel {
 
                                 if (fs.existsSync(absolutePath)) {
                                     const uri = vscode.Uri.file(absolutePath);
-                                    vscode.commands.executeCommand('vscode.open', uri);
+                                    const editor = vscode.window.visibleTextEditors.find(e => e.document === this._document);
+                                    const column = editor ? editor.viewColumn : vscode.ViewColumn.One;
+                                    vscode.commands.executeCommand('vscode.open', uri, column);
                                 } else {
                                     vscode.window.showErrorMessage(`无法打开链接，文件不存在: ${absolutePath}`);
                                 }
