@@ -8,6 +8,7 @@
   },
   "description": "Opens Windows .lnk files natively and provides a custom Markdown preview that supports .lnk links.",
   "version": "0.1.0",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.80.0"
   },
