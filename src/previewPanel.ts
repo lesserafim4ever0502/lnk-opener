@@ -8,6 +8,7 @@ import markdownItTaskLists = require('markdown-it-task-lists');
 // @ts-ignore
 import markdownItKatex = require('@iktakahiro/markdown-it-katex');
 const hljs: any = require('highlight.js');
+const tlds = require('tlds');
 
 function injectLineNumbers(md: any) {
     const rules = ['paragraph_open', 'heading_open', 'table_open', 'blockquote_open', 'bullet_list_open', 'ordered_list_open', 'code_block', 'fence', 'math_block', 'html_block'];
@@ -87,6 +88,8 @@ export class MarkdownPreviewPanel {
             .use(markdownItTaskLists)
             .use(markdownItKatex)
             .use(injectLineNumbers);
+
+        this._md.linkify.tlds(tlds, true);
 
         this.triggerUpdateContent();
 

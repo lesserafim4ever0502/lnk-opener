@@ -7,7 +7,7 @@
     "url": "https://github.com/lesserafim4ever0502/lnk-opener"
   },
   "description": "Opens Windows .lnk files natively and provides a custom Markdown preview that supports .lnk links.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.80.0"
@@ -57,7 +57,8 @@
     "@iktakahiro/markdown-it-katex": "^4.0.1",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
-    "markdown-it-task-lists": "^2.1.1"
+    "markdown-it-task-lists": "^2.1.1",
+    "tlds": "^1.261.0"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.1",
