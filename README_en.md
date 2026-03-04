@@ -10,7 +10,7 @@ A VSCode extension that supports opening Windows `.lnk` shortcuts and provides a
 Whether double-clicking a `.lnk` file in the Explorer, or clicking a link pointing to a `.lnk` in the Markdown preview, this extension invokes the native Windows system (`explorer.exe`) to open the target program or directory.
 
 ### 2. Markdown Preview Features
-Click the ⚡ (flame) icon in the top right corner of the editor to launch an independent Markdown preview:
+Click the 🔥 (flame) icon in the top right corner of the editor to launch an independent Markdown preview:
 - **Shortcut Image Rendering**: If you reference `.lnk` paths pointing to local images in your Markdown, the extension resolves the shortcut and renders the real image in the preview.
 - **Bi-Directional Scroll Sync**: Supports double-sided scrolling synchronization between the source code and preview areas. It utilizes a top-alignment mechanism and includes debouncing logic to prevent scroll conflicts.
 - **Math Equation Support**: Integrates the KaTeX engine to support rendering of inline equations `$...$` and multiline equation blocks `$$...$$`.
