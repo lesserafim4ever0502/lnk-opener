@@ -152,9 +152,28 @@ export class MarkdownPreviewPanel {
                             }
                         } catch (e) { }
                         return;
-                    case 'openExternal':
+                    case 'openLink':
                         try {
-                            vscode.env.openExternal(vscode.Uri.parse(message.url));
+                            const url = message.url;
+                            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:')) {
+                                vscode.env.openExternal(vscode.Uri.parse(url));
+                            } else {
+                                let cleanUrl = url.split('#')[0].split('?')[0];
+                                let absolutePath = cleanUrl;
+                                try { absolutePath = decodeURIComponent(cleanUrl); } catch (e) { }
+
+                                if (!path.isAbsolute(absolutePath) && this._document) {
+                                    const docDir = path.dirname(this._document.uri.fsPath);
+                                    absolutePath = path.resolve(docDir, absolutePath);
+                                }
+
+                                if (fs.existsSync(absolutePath)) {
+                                    const uri = vscode.Uri.file(absolutePath);
+                                    vscode.commands.executeCommand('vscode.open', uri);
+                                } else {
+                                    vscode.window.showErrorMessage(`无法打开链接，文件不存在: ${absolutePath}`);
+                                }
+                            }
                         } catch (e) { }
                         return;
                     case 'revealLine':
@@ -576,6 +595,11 @@ export class MarkdownPreviewPanel {
                         let node = event.target;
                         while (node) {
                             if (node.tagName && node.tagName.toLowerCase() === 'a') {
+                                const href = node.getAttribute('href');
+                                if (href && href.startsWith('#')) {
+                                    return;
+                                }
+
                                 event.preventDefault();
                                 const dataPath = node.getAttribute('data-path');
                                 if (dataPath) {
@@ -588,7 +612,6 @@ export class MarkdownPreviewPanel {
                                     return;
                                 }
 
-                                const href = node.getAttribute('href');
                                 if (href) {
                                     try {
                                         let cleanHref = href.split('?')[0].split('#')[0];
@@ -596,10 +619,10 @@ export class MarkdownPreviewPanel {
                                         if (cleanHref.toLowerCase().endsWith('.lnk')) {
                                             vscode.postMessage({ command: 'openLnk', url: href });
                                         } else {
-                                            vscode.postMessage({ command: 'openExternal', url: href });
+                                            vscode.postMessage({ command: 'openLink', url: href });
                                         }
                                     } catch (e) {
-                                        vscode.postMessage({ command: 'openExternal', url: href });
+                                        vscode.postMessage({ command: 'openLink', url: href });
                                     }
                                 }
                                 return;
