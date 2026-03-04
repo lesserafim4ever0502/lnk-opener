@@ -1,0 +1,69 @@
+{
+  "name": "lnk-opener",
+  "displayName": "Lnk Opener & Markdown Preview",
+  "publisher": "drag2note",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drag2note/lnk-opener"
+  },
+  "description": "Opens Windows .lnk files natively and provides a custom Markdown preview that supports .lnk links.",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "lnkOpener.editor",
+        "displayName": "Lnk Opener",
+        "selector": [
+          {
+            "filenamePattern": "*.lnk"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "lnkOpener.showPreview",
+        "title": "Markdown Preview (lnk support)",
+        "icon": "$(flame)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "lnkOpener.showPreview",
+          "group": "navigation",
+          "when": "resourceLangId == markdown"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "@iktakahiro/markdown-it-katex": "^4.0.1",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
+    "markdown-it-task-lists": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.1",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.1.3"
+  }
+}
