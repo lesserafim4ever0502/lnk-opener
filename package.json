@@ -1,10 +1,10 @@
 {
   "name": "lnk-opener",
   "displayName": "Lnk Opener & Markdown Preview",
-  "publisher": "drag2note",
+  "publisher": "lesserafim4ever0502",
   "repository": {
     "type": "git",
-    "url": "https://github.com/drag2note/lnk-opener"
+    "url": "https://github.com/lesserafim4ever0502/lnk-opener"
   },
   "description": "Opens Windows .lnk files natively and provides a custom Markdown preview that supports .lnk links.",
   "version": "0.1.0",
