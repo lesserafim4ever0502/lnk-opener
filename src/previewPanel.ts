@@ -90,6 +90,7 @@ export class MarkdownPreviewPanel {
             .use(injectLineNumbers);
 
         this._md.linkify.tlds(tlds, true);
+        this._md.validateLink = () => true;
 
         this.triggerUpdateContent();
 
@@ -347,7 +348,7 @@ export class MarkdownPreviewPanel {
                         // Include debugging info right on the broken image for the user to see!
                         replacements.push({
                             original: originalMatch,
-                            newStr: `<div style="border: 1px solid red; padding: 10px; color: red;"><b>Image Failed:</b><br/>Original src: ${src}<br/>Decoded: ${decodedSrc}<br/>Resolved Lnk Target: ${targetPath}<br/>Exists: false</div>`
+                            newStr: `<div style="border: 1px solid red; padding: 10px; color: red;"><b>Image Failed:</b><br/>Original src: ${src}<br/>Resolved Lnk Target: ${targetPath}<br/>Exists: false</div>`
                         });
                     }
                 } catch (err: any) {
