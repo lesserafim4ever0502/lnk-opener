@@ -263,6 +263,19 @@ export class MarkdownPreviewPanel {
         }
     }
 
+    private getAbsolutePath(src: string, docDir: string): string {
+        if (src.startsWith('file:///')) {
+            try {
+                return vscode.Uri.parse(src).fsPath;
+            } catch (e) {
+                return src;
+            }
+        }
+        let decodedSrc = src;
+        try { decodedSrc = decodeURIComponent(src); } catch (e) { }
+        return path.isAbsolute(decodedSrc) ? decodedSrc : path.resolve(docDir, decodedSrc);
+    }
+
     private async updateContentAsync() {
         if (!this._document) {
             return;
@@ -290,9 +303,8 @@ export class MarkdownPreviewPanel {
             while ((match = imgRegex.exec(tempHtml)) !== null) {
                 let src = match[2];
                 if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:')) continue;
-                let decodedSrc = src;
-                try { decodedSrc = decodeURIComponent(src); } catch (e) { }
-                const absolutePath = path.isAbsolute(decodedSrc) ? decodedSrc : path.resolve(docDir, decodedSrc);
+                
+                const absolutePath = this.getAbsolutePath(src, docDir);
                 if (absolutePath.toLowerCase().endsWith('.lnk')) {
                     lnkPaths.add(absolutePath);
                 }
@@ -314,9 +326,7 @@ export class MarkdownPreviewPanel {
                 }
 
                 try {
-                    let decodedSrc = src;
-                    try { decodedSrc = decodeURIComponent(src); } catch (e) { }
-                    const absolutePath = path.isAbsolute(decodedSrc) ? decodedSrc : path.resolve(docDir, decodedSrc);
+                    const absolutePath = this.getAbsolutePath(src, docDir);
 
                     let targetPath = absolutePath;
                     if (absolutePath.toLowerCase().endsWith('.lnk')) {
